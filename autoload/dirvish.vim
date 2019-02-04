@@ -445,6 +445,9 @@ function! dirvish#open(...) range abort
   let from_path = fnamemodify(bufname('%'), ':p')
   let to_path   = fnamemodify(s:sl(a:1), ':p')
   "                                       ^resolves to CWD if a:1 is empty
+  if has('win32')
+    let to_path = resolve(to_path)
+  endif
 
   let d._dir = filereadable(to_path) ? fnamemodify(to_path, ':p:h') : to_path
   let d._dir = s:normalize_dir(d._dir, is_uri)
